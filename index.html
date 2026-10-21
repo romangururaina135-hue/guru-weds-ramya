@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Guru Prakash K & Ramya V | Wedding Invitation</title>
+<meta property="og:title" content="Guru Prakash K & Ramya V | Wedding Invitation">
+<meta property="og:description" content="We're getting married! Tap to open 💌">
+<meta property="og:image" content="https://YOUR-SITE.vercel.app/cover.jpg">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Cormorant Garamond',serif;color:#3f2f44;background:#fbf6f7;text-align:center}
+.script{font-family:'Great Vibes',cursive}
+h2.script{font-size:clamp(28px,8.5vw,42px)}
+.btn{font-family:Montserrat,sans-serif;letter-spacing:3px;font-size:12px;padding:12px 28px;border:1px solid #b89aa8;border-radius:30px;background:#fff;color:#3f2f44;cursor:pointer;text-decoration:none;display:inline-block}
+
+#cover{position:fixed;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;background:#fff url(cover.jpg) center/cover;transition:opacity 1s}
+#cover.hide{opacity:0;pointer-events:none}
+.monogram{font-size:90px;color:#c9a14a}
+
+section{min-height:100vh;padding:60px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background-size:cover;background-position:center}
+#names{background-image:url(bg-names.jpg);text-shadow:0 0 6px #fff,0 0 12px #fff}
+#venue{background-image:url(bg-venue.jpg)}
+
+.card{background:rgba(255,255,255,.55);backdrop-filter:blur(2px);padding:24px 16px;border-radius:18px;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:360px;text-shadow:0 0 6px #fff,0 0 12px #fff}
+
+#scratch-wrap{position:relative;width:280px;height:160px;border-radius:12px;overflow:hidden;background:#fff;box-shadow:0 4px 20px rgba(0,0,0,.1)}
+.date{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:24px}
+#scratch{position:absolute;inset:0;z-index:2;touch-action:none;cursor:pointer}
+
+.count{display:flex;gap:10px}
+.count div{background:#fff;border:1px solid #d9c6cf;border-radius:10px;padding:10px;width:66px}
+.count b{font-size:26px;display:block}
+.count span{font-family:Montserrat;font-size:9px;letter-spacing:1px}
+
+.gallery-wrap{position:relative;width:100%;max-width:400px}
+.gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;scroll-behavior:smooth;scrollbar-width:none}
+.gallery::-webkit-scrollbar{display:none}
+.gallery img{scroll-snap-align:center;flex:0 0 100%;width:100%;height:420px;object-fit:cover;border:10px solid #fff;box-shadow:0 4px 15px rgba(0,0,0,.1)}
+.arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:2;width:40px;height:40px;border-radius:50%;border:1px solid #b89aa8;background:rgba(255,255,255,.85);font-size:24px;color:#3f2f44;cursor:pointer}
+.arrow.left{left:8px}
+.arrow.right{right:8px}
+.dots span{display:inline-block;width:8px;height:8px;margin:0 4px;border-radius:50%;background:#d9c6cf}
+.dots span.on{background:#3f2f44}
+
+#music{position:fixed;top:14px;right:14px;z-index:5;padding:6px 14px;font-size:10px}
+.reveal{opacity:0;transform:translateY(30px);transition:1s}
+.reveal.show{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- OPENING SCREEN -->
+<div id="cover">
+  <div class="monogram script">G &amp; R</div>
+  <p class="script" style="font-size:28px">Wedding Celebration</p>
+  <button class="btn" onclick="openInvite()">OPEN INVITATION</button>
+</div>
+
+<button id="music" class="btn" onclick="toggleMusic()">♪ OFF</button>
+<audio id="song" src="music.mp3" loop></audio>
+
+<!-- NAMES -->
+<section id="names">
+  <p class="reveal">With the blessings of the Almighty,<br>we cordially invite you with your family<br>to the wedding ceremony of</p>
+  <h2 class="script reveal" style="white-space:nowrap">Guru Prakash K</h2>
+  <p class="reveal">B.Com, CMA</p>
+  <p class="reveal" style="font-style:italic">Son of Mr. Kandhan &amp; Mrs. Shanthi</p>
+  <h2 class="script reveal">&amp;</h2>
+  <h2 class="script reveal" style="white-space:nowrap">Ramya V</h2>
+  <p class="reveal">B.Sc (Mathematics), Data Scientist</p>
+  <p class="reveal" style="font-style:italic">Daughter of Mr. Vaithiyanathan &amp; Mrs. Malathi</p>
+</section>
+
+<!-- SCRATCH CARD + COUNTDOWN -->
+<section>
+  <h2 class="script">Save the Date</h2>
+  <div id="scratch-wrap">
+    <div class="date"><b>Friday</b>23 July 2027</div>
+    <canvas id="scratch" width="280" height="160"></canvas>
+  </div>
+  <div class="count">
+    <div><b id="d">0</b><span>DAYS</span></div>
+    <div><b id="h">0</b><span>HOURS</span></div>
+    <div><b id="m">0</b><span>MINUTES</span></div>
+    <div><b id="s">0</b><span>SECONDS</span></div>
+  </div>
+</section>
+
+<!-- VENUE -->
+<section id="venue">
+  <div class="card">
+    <h2 class="script reveal">Wedding Ceremony</h2>
+    <p class="reveal" style="font-size:20px">Friday, 23 July 2027<br><b>Muhurtham: 7:30 AM</b></p>
+    <p class="reveal">Om Sai Mahal<br>Kovur, Chennai, Tamil Nadu 600128</p>
+    <a class="btn reveal" href="https://maps.google.com/?q=Om+Sai+Mahal+Kovur+Chennai" target="_blank">OPEN MAP</a>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section>
+  <h2 class="script reveal">Photo Gallery</h2>
+  <div class="gallery-wrap">
+    <button class="arrow left" onclick="slide(-1)">‹</button>
+    <div class="gallery" id="gallery">
+      <img src="photo1.jpg"><img src="photo2.jpg"><img src="photo3.jpg">
+    </div>
+    <button class="arrow right" onclick="slide(1)">›</button>
+  </div>
+  <div class="dots" id="dots"></div>
+  <p class="reveal">"Two hearts, one beautiful beginning."</p>
+  <p class="reveal">Your presence and blessings mean everything to us 💗</p>
+</section>
+
+<script>
+/* MUSIC */
+var song = document.getElementById('song');
+var musicBtn = document.getElementById('music');
+function openInvite(){
+  document.getElementById('cover').classList.add('hide');
+  song.play().then(function(){ musicBtn.textContent = '♪ ON'; })
+             .catch(function(){ musicBtn.textContent = '♪ OFF'; });
+}
+function toggleMusic(){
+  if(song.paused){ song.play(); musicBtn.textContent = '♪ ON'; }
+  else { song.pause(); musicBtn.textContent = '♪ OFF'; }
+}
+
+/* SCRATCH CARD */
+(function(){
+  var cv = document.getElementById('scratch'), ctx = cv.getContext('2d');
+  var gr = ctx.createLinearGradient(0,0,280,160);
+  gr.addColorStop(0,'#d8b4d0'); gr.addColorStop(1,'#b38fb0');
+  ctx.fillStyle = gr; ctx.fillRect(0,0,280,160);
+  ctx.fillStyle = '#3f2f44'; ctx.font = '600 16px sans-serif'; ctx.textAlign = 'center';
+  ctx.fillText('SCRATCH TO REVEAL ♡', 140, 85);
+  var drawing = false;
+  function pos(e){
+    var r = cv.getBoundingClientRect();
+    var t = e.touches ? e.touches[0] : e;
+    return { x:(t.clientX - r.left) * cv.width / r.width, y:(t.clientY - r.top) * cv.height / r.height };
+  }
+  function rub(e){
+    if(!drawing) return;
+    e.preventDefault();
+    var p = pos(e);
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.beginPath(); ctx.arc(p.x, p.y, 24, 0, Math.PI*2); ctx.fill();
+  }
+  function start(e){ drawing = true; rub(e); }
+  function end(){
+    if(!drawing) return;
+    drawing = false;
+    var data = ctx.getImageData(0,0,cv.width,cv.height).data, clear = 0;
+    for(var i = 3; i < data.length; i += 4) if(data[i] === 0) clear++;
+    if(clear / (data.length/4) > 0.4){
+      cv.style.transition = 'opacity .6s'; cv.style.opacity = 0;
+      setTimeout(function(){ cv.remove(); }, 600);
+      }
+  }
+  cv.addEventListener('mousedown', start);
+  cv.addEventListener('mousemove', rub);
+  window.addEventListener('mouseup', end);
+  cv.addEventListener('touchstart', start, {passive:false});
+  cv.addEventListener('touchmove', rub, {passive:false});
+  window.addEventListener('touchend', end);
+})();
+
+/* COUNTDOWN */
+var target = new Date('2027-07-23T07:30:00+05:30');
+setInterval(function(){
+  var t = Math.max(0, target - new Date()) / 1000;
+  document.getElementById('d').textContent = Math.floor(t/86400);
+  document.getElementById('h').textContent = String(Math.floor(t%86400/3600)).padStart(2,'0');
+  document.getElementById('m').textContent = String(Math.floor(t%3600/60)).padStart(2,'0');
+  document.getElementById('s').textContent = String(Math.floor(t%60)).padStart(2,'0');
+}, 1000);
+
+/* GALLERY */
+var gal = document.getElementById('gallery');
+var imgs = gal.querySelectorAll('img');
+var dotsBox = document.getElementById('dots');
+imgs.forEach(function(){ dotsBox.appendChild(document.createElement('span')); });
+function current(){ return Math.round(gal.scrollLeft / (gal.clientWidth + 16)); }
+function slide(dir){
+  var i = (current() + dir + imgs.length) % imgs.length;
+  gal.scrollTo({ left: i * (gal.clientWidth + 16), behavior: 'smooth' });
+}
+function updateDots(){
+  dotsBox.querySelectorAll('span').forEach(function(dot, i){ dot.classList.toggle('on', i === current()); });
+}
+gal.addEventListener('scroll', updateDots);
+updateDots();
+
+/* FADE-IN ON SCROLL */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('show'); });
+});
+document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+</script>
+</body>
+</html>
